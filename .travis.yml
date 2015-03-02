@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+- '0.12'
+before_install:
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- npm install -g gulp
+- npm install -g jspm
+- jspm config endpoints.github.auth $GH_TOKEN
+- jspm install
+script:
+- gulp build
+- ./node_modules/karma/bin/karma start --browsers Firefox --single-run
+notifications:
+  webhooks:
+    urls:
+    - https://webhooks.gitter.im/e/a6356de6d62829ab719a
+env:
+  global:
+    secure: PGsEN8Dm6KKN+tXLLM9OrZp8IuceXrX+xY30hTH/4GSzQcNicBvBXIjbc1nIktFAJ0Lzu14aw4WotWNDQXgdr6e+Soi6COsvXVGJFak9wAE6fuM6k5z3NwQRtrxRftd93i/pP3TbSpoPuSZGR7YM6wgJTseh7cOTwPlEnc7/ESA=

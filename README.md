@@ -1,4 +1,5 @@
-# aurelia-skeleton-navigation
+aurelia-skeleton-navigation [![Build Status](https://travis-ci.org/AshleyGrant/skeleton-navigation.svg?branch=travisci)](https://travis-ci.org/AshleyGrant/skeleton-navigation) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Aurelia/Discuss?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+===
 
 This skeleton is part of the [Aurelia](http://www.aurelia.io/) platform. It sets up a standard navigation-style app using gulp to build your ES6 code with the 6to5 compiler. Karma/Jasmine testing is also configured.
 

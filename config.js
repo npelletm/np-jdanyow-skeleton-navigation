@@ -1,6 +1,6 @@
 System.config({
   "paths": {
-    "*": "*.js",
+    "*": "dist/*.js",
     "github:*": "jspm_packages/github/*.js",
     "npm:*": "jspm_packages/npm/*.js",
     "aurelia-skeleton-navigation/*": "lib/*.js"
@@ -13,9 +13,12 @@ System.config({
     "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.4.5",
     "aurelia-framework": "github:aurelia/framework@0.8.8",
     "aurelia-http-client": "github:aurelia/http-client@0.5.5",
+    "aurelia-path": "github:aurelia/path@0.4.5",
     "aurelia-router": "github:aurelia/router@0.5.8",
     "bootstrap": "github:twbs/bootstrap@3.3.2",
     "font-awesome": "npm:font-awesome@4.3.0",
+    "aurelia-knockout": "github:jdanyow/aurelia-knockout@master",
+    "knockout": "npm:knockout@3.3.0",
     "github:aurelia/binding@0.3.7": {
       "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.4.5",
       "aurelia-metadata": "github:aurelia/metadata@0.3.3",
@@ -102,6 +105,10 @@ System.config({
       "aurelia-task-queue": "github:aurelia/task-queue@0.2.5",
       "core-js": "npm:core-js@0.4.10"
     },
+    "github:jdanyow/aurelia-knockout@master": {
+      "aurelia-binding": "github:aurelia/binding@0.3.7",
+      "knockout": "npm:knockout@3.3.0"
+    },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },
@@ -129,7 +136,7 @@ System.config({
       "path-browserify": "npm:path-browserify@0.0.0"
     },
     "github:jspm/nodelibs-process@0.1.1": {
-      "process": "npm:process@0.10.0"
+      "process": "npm:process@0.10.1"
     },
     "github:jspm/nodelibs-querystring@0.1.0": {
       "querystring": "npm:querystring@0.2.0"
@@ -200,6 +207,9 @@ System.config({
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
     },
+    "npm:knockout@3.3.0": {
+      "process": "github:jspm/nodelibs-process@0.1.1"
+    },
     "npm:os-browserify@0.1.2": {
       "os": "github:jspm/nodelibs-os@0.1.0"
     },
@@ -246,4 +256,3 @@ System.config({
     }
   }
 });
-

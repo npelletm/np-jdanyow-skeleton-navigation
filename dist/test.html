@@ -1,0 +1,35 @@
+<template>
+  <h1>binding to strings</h1>
+
+  <h2>single-select</h2>
+  <select value.bind="selectedColorName">
+    <option value="">Select a color</option>
+    <option repeat.for="color of colors" value.bind="color.name">${color.name}</option>
+  </select>
+  <br/>value:
+  <br/>${selectedColorName | stringify}
+
+  <h2>multi-select</h2>
+  <select value.bind="selectedColorNames" multiple size="10">
+    <option repeat.for="color of colors" value.bind="color.name">${color.name}</option>
+  </select>
+  <br/>value:
+  <br/>${selectedColorNames | stringify}
+
+  <h1>binding to objects</h1>
+
+  <h2>single-select</h2>
+  <select value.bind="selectedColor">
+    <option value="">Select a color</option>
+    <option repeat.for="color of colors" value.bind="color.name" model.bind="color">${color.name}</option>
+  </select>
+  <br/>value:
+  <br/>${selectedColor | stringify}
+
+  <h2>multi-select</h2>
+  <select value.bind="selectedColors" multiple size="10">
+    <option repeat.for="color of colors" value.bind="color.name" model.bind="color">${color.name}</option>
+  </select>
+  <br/>value:
+  <br/>${selectedColor | stringify}
+</template>

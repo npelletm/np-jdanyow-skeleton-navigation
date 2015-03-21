@@ -1,12 +1,48 @@
+import bootstrap from 'bootstrap';
+
 export class Test {
   constructor() {
     this.colors = getColors();
 
     this.selectedColorName = 'blue';
     this.selectedColorNames = ['aliceblue', 'blue'];
+    this.selectedColorNames2 = ['aliceblue', 'blue'];
 
-    this.selectedColor = null;
-    this.selectedColors = [];
+    this.selectedColor = this.colors[4];
+    this.selectedColors = [this.colors[1], this.colors[4]];
+    this.selectedColors2 = [this.colors[1], this.colors[4]];
+  }
+
+  randomize() {
+    var i = this.random(0, 20),
+        items = [];
+    while(i--) {
+      items[i] = this.colors[this.random(0, this.colors.length)];
+    }
+
+    // property assignment.
+    this.selectedColorName = items[0].name;
+    this.selectedColorNames = items.map(c => c.name);
+
+    this.selectedColor = items[0];
+    this.selectedColors = items;
+
+    // property mutation.
+    while(this.selectedColorNames2.length) {
+      this.selectedColorNames2.pop();
+    }
+    while(this.selectedColors2.length) {
+      this.selectedColors2.pop();
+    }
+    i = items.length;
+    while(i--) {
+      this.selectedColorNames2.push(items[i].name);
+      this.selectedColors2.push(items[i]);
+    }
+  }
+
+  random(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
   }
 }
 

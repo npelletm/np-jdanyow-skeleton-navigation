@@ -1,35 +1,57 @@
 <template>
-  <h1>binding to strings</h1>
+  <button click.delegate="randomize()">Select Random Values</button>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6">
+        <h1>binding to strings</h1>
 
-  <h2>single-select</h2>
-  <select value.bind="selectedColorName">
-    <option value="">Select a color</option>
-    <option repeat.for="color of colors" value.bind="color.name">${color.name}</option>
-  </select>
-  <br/>value:
-  <br/>${selectedColorName | stringify}
+        <h2>single-select</h2>
+        <select value.bind="selectedColorName">
+          <option value="">Select a color</option>
+          <option repeat.for="color of colors" value.bind="color.name">${color.name}</option>
+        </select>
+        <br/>value:
+        <br/>${selectedColorName | stringify}
 
-  <h2>multi-select</h2>
-  <select value.bind="selectedColorNames" multiple size="10">
-    <option repeat.for="color of colors" value.bind="color.name">${color.name}</option>
-  </select>
-  <br/>value:
-  <br/>${selectedColorNames | stringify}
+        <h2>multi-select - assign</h2>
+        <select value.bind="selectedColorNames" multiple size="10">
+          <option repeat.for="color of colors" value.bind="color.name">${color.name}</option>
+        </select>
+        <br/>value:
+        <br/>${selectedColorNames | stringify}
 
-  <h1>binding to objects</h1>
+        <h2>multi-select - push/pop</h2>
+        <select value.bind="selectedColorNames2" multiple size="10">
+          <option repeat.for="color of colors" value.bind="color.name">${color.name}</option>
+        </select>
+        <br/>value:
+        <br/>${selectedColorNames2 | stringify}
+      </div>
 
-  <h2>single-select</h2>
-  <select value.bind="selectedColor">
-    <option value="">Select a color</option>
-    <option repeat.for="color of colors" value.bind="color.name" model.bind="color">${color.name}</option>
-  </select>
-  <br/>value:
-  <br/>${selectedColor | stringify}
 
-  <h2>multi-select</h2>
-  <select value.bind="selectedColors" multiple size="10">
-    <option repeat.for="color of colors" value.bind="color.name" model.bind="color">${color.name}</option>
-  </select>
-  <br/>value:
-  <br/>${selectedColor | stringify}
+      <div class="col-sm-6">
+        <h1>binding to objects</h1>
+
+        <h2>single-select</h2>
+        <select value.bind="selectedColor">
+          <option value="">Select a color</option>
+          <option repeat.for="color of colors" value.bind="color.name" model.bind="color">${color.name}</option>
+        </select>
+        <br/>value:
+        <br/>${selectedColor | stringify}
+
+        <h2>multi-select - assign</h2>
+        <select value.bind="selectedColors" multiple size="10">
+          <option repeat.for="color of colors" value.bind="color.name" model.bind="color">${color.name}</option>
+        </select>
+        <br/>value:
+        <br/>${selectedColors | stringify}
+
+        <h2>multi-select - push/pop</h2>
+        <select value.bind="selectedColors2" multiple size="10">
+          <option repeat.for="color of colors" value.bind="color.name" model.bind="color">${color.name}</option>
+        </select>
+        <br/>value:
+        <br/>${selectedColors2 | stringify}
+      </div>
 </template>

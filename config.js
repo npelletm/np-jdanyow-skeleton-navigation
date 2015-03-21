@@ -9,6 +9,7 @@ System.config({
 
 System.config({
   "map": {
+    "aurelia-logging": "github:aurelia/logging@0.2.5",
     "aurelia-bootstrapper": "github:aurelia/bootstrapper@0.9.5",
     "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.4.5",
     "aurelia-framework": "github:aurelia/framework@0.8.8",

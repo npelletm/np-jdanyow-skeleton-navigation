@@ -3,8 +3,7 @@ export function configure(aurelia) {
     .defaultBindingLanguage()
     .defaultResources()
     .router()
-    .eventAggregator()
-    .plugin('aurelia-knockout');
+    .eventAggregator();
 
-  aurelia.start().then(a => a.setRoot('ko-test', document.body));
+  aurelia.start().then(a => a.setRoot('test', document.body));
 }

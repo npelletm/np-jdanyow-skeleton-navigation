@@ -11,13 +11,15 @@ export class Test {
     this.selectedColor = this.colors[4];
     this.selectedColors = [this.colors[1], this.colors[4]];
     this.selectedColors2 = [this.colors[1], this.colors[4]];
+
+    this.hack = 0;
   }
 
   randomize() {
-    var i = this.random(0, 20),
+    var i = this.random(1, 20),
         items = [];
     while(i--) {
-      items[i] = this.colors[this.random(0, this.colors.length)];
+      items[i] = this.colors[this.random(0, this.colors.length - 1)];
     }
 
     // property assignment.
@@ -28,6 +30,12 @@ export class Test {
     this.selectedColors = items;
 
     // property mutation.
+    if (this.selectedColorNames2 === null) {
+      this.selectedColorNames2 = [];
+    }
+    if (this.selectedColors2 === null) {
+      this.selectedColors2 = [];
+    }
     while(this.selectedColorNames2.length) {
       this.selectedColorNames2.pop();
     }
@@ -39,6 +47,38 @@ export class Test {
       this.selectedColorNames2.push(items[i].name);
       this.selectedColors2.push(items[i]);
     }
+    // make sure the interpolation bindings related to the push/pop examples refresh.
+    this.hack++;
+  }
+
+  assignNull() {
+    this.selectedColorName = null;
+    this.selectedColorNames = null;
+    this.selectedColorNames2 = null;
+
+    this.selectedColor = null;
+    this.selectedColors = null;
+    this.selectedColors2 = null;
+  }
+
+  assignEmpty() {
+    this.selectedColorName = '';
+    this.selectedColorNames = [];
+    this.selectedColorNames2 = [];
+
+    this.selectedColor = null;
+    this.selectedColors = [];
+    this.selectedColors2 = [];
+  }
+
+  assignGarbage() {
+    this.selectedColorName = 'Garbage';
+    this.selectedColorNames = ['Donald Draper', 'Frank Underwood'];
+    this.selectedColorNames2 = ['Aurelia', 'Angular', 'Backbone', 'Durandal', 'Ember', 'Knockout'];
+
+    this.selectedColor = { garbabe: 'asdfasdf', foo: true };
+    this.selectedColors = [{ name: 'Donald Draper' }, { name: 'Frank Underwood' }];
+    this.selectedColors2 = [['Aurelia', 'Angular', 'Backbone', 'Durandal', 'Ember', 'Knockout'], ['Aurelia', 'Angular', 'Backbone', 'Durandal', 'Ember', 'Knockout']];
   }
 
   random(min, max) {

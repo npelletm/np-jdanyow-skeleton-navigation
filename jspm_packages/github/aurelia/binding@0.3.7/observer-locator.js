@@ -163,7 +163,7 @@ System.register(["aurelia-task-queue", "./array-observation", "./map-observation
               if (obj instanceof Element) {
                 handler = this.eventManager.getElementHandler(obj, propertyName);
                 if (propertyName === "value" && obj.tagName.toLowerCase() === "select") {
-                  return new SelectValueObserver(obj, handler);
+                  return new SelectValueObserver(obj, handler, this);
                 }
                 return new ElementObserver(obj, propertyName, handler);
               }

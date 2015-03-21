@@ -503,7 +503,7 @@ System.register([], function (_export) {
 
               return function () {
                 callbacks.splice(callbacks.indexOf(callback), 1);
-                if (callback.length === 0) {
+                if (callbacks.length === 0) {
                   that.disposeHandler();
                   that.disposeHandler = null;
                 }
@@ -517,11 +517,16 @@ System.register([], function (_export) {
         return ElementObserver;
       })());
       SelectValueObserver = _export("SelectValueObserver", (function () {
-        function SelectValueObserver(element, handler) {
+        function SelectValueObserver(element, handler, observerLocator) {
           _classCallCheck(this, SelectValueObserver);
 
           this.element = element;
           this.handler = handler;
+          this.observerLocator = observerLocator;
+          this.observer = new MutationObserver(this.domMutated.bind(this));
+          this.observer.observe(this.element, { childList: true, subtree: true });
+          // todo:  where do we put this:  "this.observer.disconnect();"
+          // we may also have an array subscription to dispose of.
         }
 
         _prototypeProperties(SelectValueObserver, null, {
@@ -537,9 +542,20 @@ System.register([], function (_export) {
               if (newValue !== null && newValue !== undefined && this.element.multiple && !Array.isArray(newValue)) {
                 throw new Error("Only null or Array instances can be bound to a multi-select.");
               }
-              // dispose array subscription.
+              if (this.value === newValue) {
+                return;
+              }
+              // unsubscribe from old array.
+              if (this.arraySubscription) {
+                this.arraySubscription();
+                this.arraySubscription = null;
+              }
+              // subscribe to new array.
+              if (Array.isArray(newValue)) {
+                this.arraySubscription = this.observerLocator.getArrayObserver(newValue).subscribe(this.synchronizeOptions.bind(this));
+              }
+              // assign and sync element.
               this.value = newValue;
-              // if the newValue is an array, observe it.
               this.synchronizeOptions();
             },
             writable: true,
@@ -547,8 +563,6 @@ System.register([], function (_export) {
           },
           synchronizeOptions: {
             value: function synchronizeOptions() {
-              var _this = this;
-
               var value = this.value,
                   i,
                   options,
@@ -556,13 +570,7 @@ System.register([], function (_export) {
                   optionValue,
                   clear,
                   isArray;
-              // delay initial sync to ensure repeat is rendered... better way to do this?
-              if (!this.delayed) {
-                this.delayed = true;
-                setTimeout(function () {
-                  return _this.synchronizeOptions();
-                }, 0);
-              }
+
               if (value === null || value === undefined) {
                 clear = true;
               } else if (Array.isArray(value)) {
@@ -633,23 +641,33 @@ System.register([], function (_export) {
           },
           subscribe: {
             value: function subscribe(callback) {
-              var that = this;
-
-              if (!this.disposeHandler) {
-                this.disposeHandler = this.handler.subscribe(this.element, this.synchronizeValue.bind(this));
+              if (!this.callbacks) {
+                this.callbacks = [];
+                this.disposeHandler = this.handler.subscribe(this.element, this.synchronizeValue.bind(this, false));
               }
 
-              var callbacks = this.callbacks = this.callbacks || [];
-
-              callbacks.push(callback);
-
-              return function () {
-                callbacks.splice(callbacks.indexOf(callback), 1);
-                if (callback.length === 0) {
-                  that.disposeHandler();
-                  that.disposeHandler = null;
-                }
-              };
+              this.callbacks.push(callback);
+              return this.unsubscribe.bind(this, callback);
+            },
+            writable: true,
+            configurable: true
+          },
+          unsubscribe: {
+            value: function unsubscribe(callback) {
+              var callbacks = this.callbacks;
+              callbacks.splice(callbacks.indexOf(callback), 1);
+              if (callbacks.length === 0) {
+                that.disposeHandler();
+                that.disposeHandler = null;
+                this.callbacks = null;
+              }
+            },
+            writable: true,
+            configurable: true
+          },
+          domMutated: {
+            value: function domMutated(mutations) {
+              this.synchronizeOptions();
             },
             writable: true,
             configurable: true

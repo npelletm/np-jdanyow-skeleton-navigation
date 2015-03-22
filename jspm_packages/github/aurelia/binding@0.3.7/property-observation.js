@@ -523,10 +523,7 @@ System.register([], function (_export) {
           this.element = element;
           this.handler = handler;
           this.observerLocator = observerLocator;
-          this.observer = new MutationObserver(this.domMutated.bind(this));
-          this.observer.observe(this.element, { childList: true, subtree: true });
-          // todo:  where do we put this:  "this.observer.disconnect();"
-          // we may also have an array subscription to dispose of.
+          this.bindings = 0;
         }
 
         _prototypeProperties(SelectValueObserver, null, {
@@ -657,17 +654,37 @@ System.register([], function (_export) {
               var callbacks = this.callbacks;
               callbacks.splice(callbacks.indexOf(callback), 1);
               if (callbacks.length === 0) {
-                that.disposeHandler();
-                that.disposeHandler = null;
+                this.disposeHandler();
+                this.disposeHandler = null;
                 this.callbacks = null;
               }
             },
             writable: true,
             configurable: true
           },
-          domMutated: {
-            value: function domMutated(mutations) {
-              this.synchronizeOptions();
+          bind: {
+            value: function bind() {
+              this.bindings++;
+              if (!this.domObserver) {
+                this.domObserver = new MutationObserver(this.synchronizeOptions.bind(this));
+                this.domObserver.observe(this.element, { childList: true, subtree: true });
+              }
+            },
+            writable: true,
+            configurable: true
+          },
+          unbind: {
+            value: function unbind() {
+              this.bindings--;
+              if (this.bindings === 0) {
+                this.domObserver.disconnect();
+                this.domObserver = null;
+
+                if (this.arraySubscription) {
+                  this.arraySubscription();
+                  this.arraySubscription = null;
+                }
+              }
             },
             writable: true,
             configurable: true

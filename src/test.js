@@ -81,6 +81,20 @@ export class Test {
     this.selectedColors2 = [['Aurelia', 'Angular', 'Backbone', 'Durandal', 'Ember', 'Knockout'], ['Aurelia', 'Angular', 'Backbone', 'Durandal', 'Ember', 'Knockout']];
   }
 
+  randomizeOptions() {
+    var colors = this.colors,
+        i = colors.length;
+    while(i--) {
+      colors[i].sort = this.random(0, colors.length - 1);
+    }
+    colors.sort((a, b) => a.sort - b.sort);
+
+    i = colors.length;
+    while(i--) {
+      delete colors[i].sort;
+    }
+  }
+
   random(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }

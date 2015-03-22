@@ -5,5 +5,5 @@ export function configure(aurelia) {
     .router()
     .eventAggregator();
 
-  aurelia.start().then(a => a.setRoot('test', document.body));
+  aurelia.start().then(a => a.setRoot('app', document.body));
 }

@@ -8,7 +8,8 @@ export class App {
     this.router.configure(config => {
       config.title = 'Aurelia';
       config.map([
-        { route: ['','welcome'],  moduleId: 'test',      nav: true, title:'Welcome' },
+        { route: ['','test'],     moduleId: 'test',         nav: true, title:'Test' },
+        { route: 'welcome',       moduleId: 'welcome',      nav: true },
         { route: 'flickr',        moduleId: 'flickr',       nav: true },
         { route: 'child-router',  moduleId: 'child-router', nav: true, title:'Child Router' }
       ]);

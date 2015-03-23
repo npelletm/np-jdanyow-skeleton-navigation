@@ -23,8 +23,8 @@ System.register([], function (_export) {
           this.children = children;
           this.systemControlled = systemControlled;
           this.contentSelectors = contentSelectors;
-          this.firstChild = fragment.firstChild;
-          this.lastChild = fragment.lastChild;
+          this.firstChild = fragment.firstChild || null;
+          this.lastChild = fragment.lastChild || null;
           this.isBound = false;
           this.isAttached = false;
         }

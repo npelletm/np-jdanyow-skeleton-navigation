@@ -156,7 +156,7 @@ System.register(["./content-selector", "./animator"], function (_export) {
                 return view;
               };
 
-              var element = view.firstChild !== null && view.firstChild.nextElementSibling !== null ? view.firstChild.nextElementSibling : null;
+              var element = view.firstChild !== null && view.firstChild.nextElementSibling ? view.firstChild.nextElementSibling : null;
               if (view.firstChild !== null && view.firstChild.nodeType === 8 && element !== null && element.nodeType === 1 && element.classList.contains("au-animate")) {
                 return this.animator.leave(element).then(function () {
                   return removeAction();

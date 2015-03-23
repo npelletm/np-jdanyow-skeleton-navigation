@@ -1,5 +1,5 @@
 System.register([], function (_export) {
-  var _prototypeProperties, _classCallCheck, SetterObserver, OoObjectObserver, OoPropertyObserver, UndefinedPropertyObserver, ElementObserver, SelectValueObserver, SelectedOptions;
+  var _prototypeProperties, _classCallCheck, SetterObserver, OoObjectObserver, OoPropertyObserver, UndefinedPropertyObserver, ElementObserver, SelectValueObserver;
 
   function flattenCss(object) {
     var s = "";
@@ -594,23 +594,28 @@ System.register([], function (_export) {
           },
           synchronizeValue: {
             value: function synchronizeValue() {
-              var selectedOptions = this.element.selectedOptions,
-                  count = selectedOptions.length,
+              var options = this.element.options,
                   option,
                   i,
-                  value;
+                  ii,
+                  count = 0,
+                  value = [];
 
-              if (this.element.multiple) {
-                value = [];
-                for (i = 0; i < count; i++) {
-                  option = selectedOptions.item(i);
-                  value[i] = option.hasOwnProperty("model") ? option.model : option.value;
+              for (i = 0, ii = options.length; i < ii; i++) {
+                option = option.item(i);
+                if (!option.selected) {
+                  continue;
                 }
-              } else if (count === 0) {
-                value = null;
-              } else {
-                option = selectedOptions.item(0);
-                value = option.hasOwnProperty("model") ? option.model : option.value;
+                value[count] = option.hasOwnProperty("model") ? option.model : option.value;
+                count++;
+              }
+
+              if (!this.element.multiple) {
+                if (count === 0) {
+                  value = null;
+                } else {
+                  value = value[0];
+                }
               }
 
               this.oldValue = this.value;
@@ -685,48 +690,6 @@ System.register([], function (_export) {
 
         return SelectValueObserver;
       })());
-
-      // polyfill HTMLSelectElement.selectedOptions
-
-      SelectedOptions = (function () {
-        function SelectedOptions(element) {
-          _classCallCheck(this, SelectedOptions);
-
-          var options = element.options,
-              option,
-              selected = [],
-              i,
-              ii;
-          for (i = 0, ii = options.length; i < ii; i++) {
-            option = options[i];
-            if (option.selected) {
-              selected.push(option);
-            }
-          }
-          this.selected = selected;
-          this.length = selected.length;
-        }
-
-        _prototypeProperties(SelectedOptions, null, {
-          item: {
-            value: function item(i) {
-              return this.selected[i];
-            },
-            writable: true,
-            configurable: true
-          }
-        });
-
-        return SelectedOptions;
-      })();
-
-      if (!HTMLSelectElement.prototype.selectedOptions) {
-        Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
-          get: function get() {
-            return new SelectedOptions(this);
-          }
-        });
-      }
     }
   };
 });

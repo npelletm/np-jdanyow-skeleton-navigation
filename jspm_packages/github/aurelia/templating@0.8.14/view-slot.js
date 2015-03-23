@@ -101,7 +101,7 @@ System.register(["./content-selector", "./animator"], function (_export) {
               if (this.isAttached) {
                 view.attached();
                 // Animate page itself
-                var element = view.firstChild ? view.firstChild.nextElementSibling : null;
+                var element = view.firstChild !== null ? view.firstChild.nextElementSibling : null;
                 if (view.firstChild !== null && view.firstChild.nodeType === 8 && element !== null && element.nodeType === 1 && element.classList.contains("au-animate")) {
                   this.animator.enter(element);
                 }
@@ -156,7 +156,7 @@ System.register(["./content-selector", "./animator"], function (_export) {
                 return view;
               };
 
-              var element = view.firstChild ? view.firstChild.nextElementSibling : null;
+              var element = view.firstChild !== null && view.firstChild.nextElementSibling !== null ? view.firstChild.nextElementSibling : null;
               if (view.firstChild !== null && view.firstChild.nodeType === 8 && element !== null && element.nodeType === 1 && element.classList.contains("au-animate")) {
                 return this.animator.leave(element).then(function () {
                   return removeAction();
@@ -179,7 +179,7 @@ System.register(["./content-selector", "./animator"], function (_export) {
               var rmPromises = [];
 
               children.forEach(function (child) {
-                var element = child.firstChild ? child.firstChild.nextElementSibling : null;
+                var element = child.firstChild !== null ? child.firstChild.nextElementSibling : null;
                 if (child.firstChild !== null && child.firstChild.nodeType === 8 && element !== null && element.nodeType === 1 && element.classList.contains("au-animate")) {
                   rmPromises.push(_this.animator.leave(element).then(function () {
                     child.removeNodes();
@@ -228,7 +228,7 @@ System.register(["./content-selector", "./animator"], function (_export) {
           },
           attached: {
             value: function attached() {
-              var i, ii, children;
+              var i, ii, children, child;
 
               if (this.isAttached) {
                 return;
@@ -238,10 +238,11 @@ System.register(["./content-selector", "./animator"], function (_export) {
 
               children = this.children;
               for (i = 0, ii = children.length; i < ii; ++i) {
-                children[i].attached();
+                child = children[i];
+                child.attached();
 
-                var element = children[i].firstChild ? children[i].firstChild.nextElementSibling : null;
-                if (children[i].firstChild !== null && children[i].firstChild.nodeType === 8 && element !== null && element.nodeType === 1 && element.classList.contains("au-animate")) {
+                var element = child.firstChild !== null ? child.firstChild.nextElementSibling : null;
+                if (child.firstChild !== null && child.firstChild.nodeType === 8 && element !== null && element.nodeType === 1 && element.classList.contains("au-animate")) {
                   this.animator.enter(element);
                 }
               }

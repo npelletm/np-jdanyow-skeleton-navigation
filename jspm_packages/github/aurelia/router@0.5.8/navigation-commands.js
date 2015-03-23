@@ -31,10 +31,11 @@ System.register([], function (_export) {
       * @param {String} url The url to redirect to.
       */
       Redirect = _export("Redirect", (function () {
-        function Redirect(url) {
+        function Redirect(url, options) {
           _classCallCheck(this, Redirect);
 
           this.url = url;
+          this.options = Object.assign({ trigger: true, replace: true }, options || {});
           this.shouldContinueProcessing = false;
         }
 
@@ -64,7 +65,8 @@ System.register([], function (_export) {
             */
 
             value: function navigate(appRouter) {
-              (this.router || appRouter).navigate(this.url, { trigger: true, replace: true });
+              var navigatingRouter = this.options.useAppRouter ? appRouter : this.router || appRouter;
+              navigatingRouter.navigate(this.url, this.options);
             },
             writable: true,
             configurable: true

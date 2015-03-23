@@ -523,7 +523,6 @@ System.register([], function (_export) {
           this.element = element;
           this.handler = handler;
           this.observerLocator = observerLocator;
-          this.bindings = 0;
         }
 
         _prototypeProperties(SelectValueObserver, null, {
@@ -607,10 +606,9 @@ System.register([], function (_export) {
                   option = selectedOptions.item(i);
                   value[i] = option.hasOwnProperty("model") ? option.model : option.value;
                 }
+              } else if (count === 0) {
+                value = null;
               } else {
-                if (count === 0) {
-                  value = null;
-                }
                 option = selectedOptions.item(0);
                 value = option.hasOwnProperty("model") ? option.model : option.value;
               }
@@ -664,26 +662,20 @@ System.register([], function (_export) {
           },
           bind: {
             value: function bind() {
-              this.bindings++;
-              if (!this.domObserver) {
-                this.domObserver = new MutationObserver(this.synchronizeOptions.bind(this));
-                this.domObserver.observe(this.element, { childList: true, subtree: true });
-              }
+              this.domObserver = new MutationObserver(this.synchronizeOptions.bind(this));
+              this.domObserver.observe(this.element, { childList: true, subtree: true });
             },
             writable: true,
             configurable: true
           },
           unbind: {
             value: function unbind() {
-              this.bindings--;
-              if (this.bindings === 0) {
-                this.domObserver.disconnect();
-                this.domObserver = null;
+              this.domObserver.disconnect();
+              this.domObserver = null;
 
-                if (this.arraySubscription) {
-                  this.arraySubscription();
-                  this.arraySubscription = null;
-                }
+              if (this.arraySubscription) {
+                this.arraySubscription();
+                this.arraySubscription = null;
               }
             },
             writable: true,

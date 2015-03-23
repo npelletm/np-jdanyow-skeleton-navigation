@@ -602,7 +602,7 @@ System.register([], function (_export) {
                   value = [];
 
               for (i = 0, ii = options.length; i < ii; i++) {
-                option = option.item(i);
+                option = options.item(i);
                 if (!option.selected) {
                   continue;
                 }

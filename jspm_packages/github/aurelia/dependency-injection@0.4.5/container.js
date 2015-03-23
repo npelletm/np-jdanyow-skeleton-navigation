@@ -1,14 +1,15 @@
-System.register(["aurelia-metadata", "./metadata", "./util"], function (_export) {
-  var Metadata, Resolver, Registration, isClass, _prototypeProperties, _classCallCheck, emptyParameters, Container;
+System.register(["aurelia-metadata", "./metadata"], function (_export) {
+  var Metadata, Resolver, Registration, Factory, _prototypeProperties, _classCallCheck, emptyParameters, Container;
 
+  // Fix Function#name on browsers that do not support it (IE):
+  function test() {}
   return {
     setters: [function (_aureliaMetadata) {
       Metadata = _aureliaMetadata.Metadata;
     }, function (_metadata) {
       Resolver = _metadata.Resolver;
       Registration = _metadata.Registration;
-    }, function (_util) {
-      isClass = _util.isClass;
+      Factory = _metadata.Factory;
     }],
     execute: function () {
       "use strict";
@@ -18,6 +19,17 @@ System.register(["aurelia-metadata", "./metadata", "./util"], function (_export)
       _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
       emptyParameters = Object.freeze([]);
+      if (!test.name) {
+        Object.defineProperty(Function.prototype, "name", {
+          get: function get() {
+            var name = this.toString().match(/^\s*function\s*(\S*)\s*\(/)[1];
+            // For better performance only parse once, and then cache the
+            // result through a new accessor for repeated access.
+            Object.defineProperty(this, "name", { value: name });
+            return name;
+          }
+        });
+      }
 
       /**
       * A lightweight, extensible dependency injection container.
@@ -375,7 +387,9 @@ System.register(["aurelia-metadata", "./metadata", "./util"], function (_export)
                 throw error;
               }
 
-              if (info.isClass) {
+              if (info.isFactory) {
+                return fn.apply(undefined, args);
+              } else {
                 context = Object.create(fn.prototype);
 
                 if ("initialize" in fn) {
@@ -383,8 +397,6 @@ System.register(["aurelia-metadata", "./metadata", "./util"], function (_export)
                 }
 
                 return fn.apply(context, args) || context;
-              } else {
-                return fn.apply(undefined, args);
               }
             },
             writable: true,
@@ -426,7 +438,7 @@ System.register(["aurelia-metadata", "./metadata", "./util"], function (_export)
           },
           createConstructionInfo: {
             value: function createConstructionInfo(fn) {
-              var info = { isClass: isClass(fn) };
+              var info = { isFactory: Metadata.on(fn).has(Factory) };
 
               if (fn.inject !== undefined) {
                 if (typeof fn.inject === "function") {

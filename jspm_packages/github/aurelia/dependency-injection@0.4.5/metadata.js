@@ -1,5 +1,5 @@
 System.register([], function (_export) {
-  var _inherits, _prototypeProperties, _classCallCheck, Registration, Transient, Singleton, Resolver, Lazy, All, Optional, Parent;
+  var _inherits, _prototypeProperties, _classCallCheck, Registration, Transient, Singleton, Resolver, Lazy, All, Optional, Parent, Factory;
 
   return {
     setters: [],
@@ -407,6 +407,16 @@ System.register([], function (_export) {
 
         return Parent;
       })(Resolver));
+
+      /**
+      * An annotation used to indicate that a particular function is a factory rather than a constructor.
+      *
+      * @class Factory
+      * @constructor
+      */
+      Factory = _export("Factory", function Factory() {
+        _classCallCheck(this, Factory);
+      });
     }
   };
 });

@@ -62,7 +62,7 @@
           <div class="col-sm-4">
             <select value.bind="selectedColor">
               <option value="">Select a color</option>
-              <option repeat.for="color of colors" value.bind="color.name" model.bind="color">${color.name}</option>
+              <option repeat.for="color of colors" model.bind="color">${color.name}</option>
             </select>
           </div>
           <div class="col-sm-8">
@@ -75,7 +75,7 @@
         <div class="row">
           <div class="col-sm-4">
             <select value.bind="selectedColors" multiple size="10">
-              <option repeat.for="color of colors" value.bind="color.name" model.bind="color">${color.name}</option>
+              <option repeat.for="color of colors" model.bind="color">${color.name}</option>
             </select>
           </div>
           <div class="col-sm-8">
@@ -88,7 +88,7 @@
         <div class="row">
           <div class="col-sm-4">
             <select value.bind="selectedColors2" multiple size="10">
-              <option repeat.for="color of colors" value.bind="color.name" model.bind="color">${color.name}</option>
+              <option repeat.for="color of colors" model.bind="color">${color.name}</option>
             </select>
           </div>
           <div class="col-sm-8">

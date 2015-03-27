@@ -3,92 +3,70 @@
     <div class="row" style="margin-bottom: 15px">
       <button class="btn btn-info" click.delegate="randomizeOptions()">Randomize Options</button>
       <button class="btn btn-info" click.delegate="randomizeSelection()">Randomize Selection</button>
+      <a href="https://github.com/jdanyow/skeleton-navigation/blob/gh-pages/src/checked-test.html" target="_blank">HTML for this page</a> |
+      <a href="https://github.com/jdanyow/skeleton-navigation/blob/gh-pages/src/checked-test.js" target="_blank">javascript for this page</a> |
+      <a href="https://github.com/jdanyow/binding/blob/issue-43/src/property-observation.js#L486" target="_blank">CheckedObserver</a>
     </div>
+
+    <h1>checkboxes</h1>
+    <h3>checked.bind="arrayOfStrings"</h3>
     <div class="row">
-      <h2>checkboxes</h2>
-      <h3>checked.bind="arrayOfStrings"</h3>
       <div class="col-sm-6">
         <label style="display: block">Choose:</label>
-        <label repeat.for="color of colors"
-               css="background-color: ${color.hex};"
-               class="swatch">
-          <input type="checkbox"
-                 value.bind="color.name"
-                 checked.bind="$parent.selectedColorNames" />
-          <span class="glyphicon glyphicon-ok"
-                css="color: ${color.hex | invertColor}">
-          </span>
+        <label repeat.for="color of colors" css="background-color: ${color.hex};" class="swatch">
+          <input type="checkbox" value.bind="color.name" checked.bind="$parent.selectedColorNames" />
+          <span class="glyphicon glyphicon-ok" css="color: ${color.hex | invertColor}" />
         </label>
       </div>
       <div class="col-sm-6">
         <label style="display: block">Result:</label>
-        <div repeat.for="color of selectedColorNames" css="background-color: ${color};" class="swatch">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <h3>checked.bind="arrayOfObjects"</h3>
-      <div class="col-sm-6">
-        <label style="display: block">Choose:</label>
-        <label repeat.for="color of colors"
-               css="background-color: ${color.hex};"
-               class="swatch">
-          <input type="checkbox"
-                 model.bind="color"
-                 checked.bind="$parent.selectedColors" />
-          <span class="glyphicon glyphicon-ok"
-                css="color: ${color.hex | invertColor}">
-          </span>
-        </label>
-      </div>
-      <div class="col-sm-6">
-        <label style="display: block">Result:</label>
-        <div repeat.for="color of selectedColors" css="background-color: ${color.hex};" class="swatch">
-        </div>
+        <div repeat.for="color of selectedColorNames" css="background-color: ${color};" class="swatch"></div>
       </div>
     </div>
 
+    <h3>checked.bind="arrayOfObjects"</h3>
     <div class="row">
-      <h2>radios</h2>
-      <h3>checked.bind="stringProperty"</h3>
       <div class="col-sm-6">
         <label style="display: block">Choose:</label>
-        <label repeat.for="color of colors"
-               css="background-color: ${color.hex};"
-               class="swatch">
-          <input type="radio" name="string-test"
-                 value.bind="color.name"
-                 checked.bind="$parent.selectedColorName" />
-          <span class="glyphicon glyphicon-ok"
-                css="color: ${color.hex | invertColor}">
-          </span>
+        <label repeat.for="color of colors" css="background-color: ${color.hex};" class="swatch">
+          <input type="checkbox" model.bind="color" checked.bind="$parent.selectedColors" />
+          <span class="glyphicon glyphicon-ok" css="color: ${color.hex | invertColor}" />
         </label>
       </div>
       <div class="col-sm-6">
         <label style="display: block">Result:</label>
-        <div css="background-color: ${selectedColorName};" class="swatch big">
-        </div>
+        <div repeat.for="color of selectedColors" css="background-color: ${color.hex};" class="swatch"></div>
       </div>
     </div>
+
+    <h1>radios</h1>
+    <h3>checked.bind="stringProperty"</h3>
     <div class="row">
-      <h3>checked.bind="objectProperty"</h3>
       <div class="col-sm-6">
         <label style="display: block">Choose:</label>
-        <label repeat.for="color of colors"
-               css="background-color: ${color.hex};"
-               class="swatch">
-          <input type="radio" name="object-test"
-                 model.bind="color"
-                 checked.bind="$parent.selectedColor" />
-          <span class="glyphicon glyphicon-ok"
-                css="color: ${color.hex | invertColor}">
-          </span>
+        <label repeat.for="color of colors" css="background-color: ${color.hex};" class="swatch">
+          <input type="radio" name="string-test" value.bind="color.name" checked.bind="$parent.selectedColorName" />
+          <span class="glyphicon glyphicon-ok" css="color: ${color.hex | invertColor}" />
         </label>
       </div>
       <div class="col-sm-6">
         <label style="display: block">Result:</label>
-        <div css="background-color: ${selectedColor.hex};" class="swatch big">
-        </div>
+        <div css="background-color: ${selectedColorName};" class="swatch big"></div>
+      </div>
+    </div>
+
+    <h3>checked.bind="objectProperty"</h3>
+    <div class="row">
+      <div class="col-sm-6">
+        <label style="display: block">Choose:</label>
+        <label repeat.for="color of colors" css="background-color: ${color.hex};" class="swatch">
+          <input type="radio" name="object-test" model.bind="color" checked.bind="$parent.selectedColor" />
+          <span class="glyphicon glyphicon-ok" css="color: ${color.hex | invertColor}" />
+        </label>
+      </div>
+      <div class="col-sm-6">
+        <label style="display: block">Result:</label>
+        <div css="background-color: ${selectedColor.hex};" class="swatch big"></div>
       </div>
     </div>
   </div>

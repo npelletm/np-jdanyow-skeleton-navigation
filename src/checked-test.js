@@ -11,7 +11,7 @@ export class Test {
     this.selectedColorName = this.colors[82].name;
 
     this.checkedBooleanTest = { a: false, b: true, c: false, d: true };
-    this.radioBooleanTest = { a: false, b: false, c: false, d: false };
+    this.radioBooleanTest = false;
   }
 
   deselectAll() {
@@ -25,10 +25,7 @@ export class Test {
     this.checkedBooleanTest.c = false;
     this.checkedBooleanTest.d = false;
 
-    this.radioBooleanTest.a = false;
-    this.radioBooleanTest.b = false;
-    this.radioBooleanTest.c = false;
-    this.radioBooleanTest.d = false;
+    this.radioBooleanTest = null;
   }
 
   randomizeSelection(iterations = 7) {
@@ -38,7 +35,7 @@ export class Test {
       items[i] = this.colors[this.random(0, this.colors.length - 1)];
     }
 
-    this.selectedColor = items[5];
+    this.selectedColor = items[0];
     this.selectedColorName = this.selectedColor.name;
 
     if (this.selectedColorNames === null) {
@@ -64,11 +61,18 @@ export class Test {
     this.checkedBooleanTest.c = this.random(0, 1) === 1;
     this.checkedBooleanTest.d = this.random(0, 1) === 1;
 
-    var r = this.random(0, 3);
-    this.radioBooleanTest.a = r === 0;
-    this.radioBooleanTest.b = r === 1;
-    this.radioBooleanTest.c = r === 2;
-    this.radioBooleanTest.d = r === 3;
+    var r = this.random(0, 2);
+    switch(r) {
+      case 0:
+        this.radioBooleanTest = null;
+        break;
+      case 1:
+        this.radioBooleanTest = false;
+        break;
+      case 2:
+        this.radioBooleanTest = true;
+        break;
+    }
 
     if (iterations > 0) {
       iterations--;
@@ -125,3 +129,21 @@ export class InvertColorValueConverter {
     return rgb.r * 0.299 + rgb.g * 0.587 + rgb.b * 0.114 > 186 ? '#000000' : '#ffffff';
   }
 }
+
+// function argsArrayToObject(args) {
+//   var i = 1, options = {};
+//   while(i < args.length) {
+//     options[args[i]] = args[i + 1];
+//     i += 2;
+//   }
+//   return options;
+// }
+//
+// export class TestValueConverter {
+//   toView(...args) {
+//     var value = args[0];
+//     args = argsArrayToObject(args);
+//
+//     console.log(JSON.stringify(args, null, 4));
+//   }
+// }

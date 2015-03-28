@@ -709,6 +709,8 @@ System.register([], function (_export) {
           },
           setValue: {
             value: function setValue(newValue) {
+              var _this = this;
+
               if (this.value === newValue) {
                 return;
               }
@@ -724,6 +726,13 @@ System.register([], function (_export) {
               // assign and sync element.
               this.value = newValue;
               this.synchronizeElement();
+              // queue up an initial sync after the bindings have been evaluated.
+              if (!this.element.hasOwnProperty("model") && !this.initialSync) {
+                this.initialSync = true;
+                this.observerLocator.taskQueue.queueMicroTask({ call: function () {
+                    return _this.synchronizeElement();
+                  } });
+              }
             },
             writable: true,
             configurable: true
@@ -733,14 +742,9 @@ System.register([], function (_export) {
               var value = this.value,
                   element = this.element,
                   elementValue = element.hasOwnProperty("model") ? element.model : element.value,
-                  useIndeterminate;
+                  isRadio = element.type === "radio";
 
-              element.checked = value === true || value === elementValue || element.type === "checkbox" && Array.isArray(value) && value.indexOf(elementValue) !== -1;
-
-              if (value === null) {
-                useIndeterminate = element.hasOwnProperty("use-indeterminate") && element["use-indeterminate"] !== false;
-                element.indeterminate = useIndeterminate;
-              }
+              element.checked = isRadio && value === elementValue || !isRadio && value === true || !isRadio && Array.isArray(value) && value.indexOf(elementValue) !== -1;
             },
             writable: true,
             configurable: true
@@ -765,8 +769,6 @@ System.register([], function (_export) {
                 } else {
                   value = element.checked;
                 }
-              } else if (typeof value === "boolean") {
-                value = element.checked;
               } else if (element.checked) {
                 value = elementValue;
               } else {

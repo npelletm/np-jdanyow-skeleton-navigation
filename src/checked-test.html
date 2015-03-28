@@ -17,7 +17,7 @@
       <div class="col-sm-6">
         <label style="display: block">Choose:</label>
         <label repeat.for="color of colors" css="background-color: ${color.hex};" class="swatch">
-          <input type="checkbox" value.bind="color.name" checked.bind="$parent.selectedColorNames" />
+          <input type="checkbox" checked.bind="$parent.selectedColorNames" value.bind="color.name" />
           <span class="glyphicon glyphicon-ok" css="color: ${color.hex | invertColor}" />
         </label>
       </div>
@@ -97,14 +97,13 @@
     <div class="row">
       <div class="col-sm-6">
         <ul>
-          <li><label><input type="radio" name="boolean-test" checked.bind="radioBooleanTest.a" />Option A</label></li>
-          <li><label><input type="radio" name="boolean-test" checked.bind="radioBooleanTest.b" />Option B</label></li>
-          <li><label><input type="radio" name="boolean-test" checked.bind="radioBooleanTest.c" />Option C</label></li>
-          <li><label><input type="radio" name="boolean-test" checked.bind="radioBooleanTest.d" />Option D</label></li>
+          <li><label><input type="radio" name="boolean-test" model.bind="null" checked.bind="radioBooleanTest" />null</label></li>
+          <li><label><input type="radio" name="boolean-test" model.bind="false" checked.bind="radioBooleanTest" />false</label></li>
+          <li><label><input type="radio" name="boolean-test" model.bind="true" checked.bind="radioBooleanTest" />true</label></li>
         </ul>
       </div>
       <div class="col-sm-6">
-        { a: ${radioBooleanTest.a}, b: ${radioBooleanTest.b}, c: ${radioBooleanTest.c}, d: ${radioBooleanTest.d} }
+        ${radioBooleanTest | stringify}
       </div>
     </div>
   </div>

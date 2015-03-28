@@ -1,14 +1,17 @@
 <template>
   <div class="container">
-    <div class="row" style="margin-bottom: 15px">
-      <button class="btn btn-info" click.delegate="randomizeOptions()">Randomize Options</button>
-      <button class="btn btn-info" click.delegate="randomizeSelection()">Randomize Selection</button>
+    <div class="row" style="margin-bottom: 5px">
       <a href="https://github.com/jdanyow/skeleton-navigation/blob/gh-pages/src/checked-test.html" target="_blank">HTML for this page</a> |
       <a href="https://github.com/jdanyow/skeleton-navigation/blob/gh-pages/src/checked-test.js" target="_blank">javascript for this page</a> |
       <a href="https://github.com/jdanyow/binding/blob/issue-43/src/property-observation.js#L486" target="_blank">CheckedObserver</a>
     </div>
 
-    <h1>checkboxes</h1>
+    <h1>
+      checkboxes
+      <button class="btn btn-info btn-sm" click.delegate="randomizeOptions()">Randomize Options</button>
+      <button class="btn btn-info btn-sm" click.delegate="randomizeSelection()">Randomize Selection</button>
+      <button class="btn btn-info btn-sm" click.delegate="deselectAll()">De-select All</button>
+    </h1>
     <h3>checked.bind="arrayOfStrings"</h3>
     <div class="row">
       <div class="col-sm-6">
@@ -39,7 +42,27 @@
       </div>
     </div>
 
-    <h1>radios</h1>
+    <h3>checked.bind="booleanProperty"</h3>
+    <div class="row">
+      <div class="col-sm-6">
+        <ul>
+          <li><label><input type="checkbox" checked.bind="checkedBooleanTest.a" />Option A</label></li>
+          <li><label><input type="checkbox" checked.bind="checkedBooleanTest.b" />Option B</label></li>
+          <li><label><input type="checkbox" checked.bind="checkedBooleanTest.c" />Option C</label></li>
+          <li><label><input type="checkbox" checked.bind="checkedBooleanTest.d" />Option D</label></li>
+        </ul>
+      </div>
+      <div class="col-sm-6">
+        { a: ${checkedBooleanTest.a}, b: ${checkedBooleanTest.b}, c: ${checkedBooleanTest.c}, d: ${checkedBooleanTest.d} }
+      </div>
+    </div>
+
+    <h1>
+      radios
+      <button class="btn btn-info btn-sm" click.delegate="randomizeOptions()">Randomize Options</button>
+      <button class="btn btn-info btn-sm" click.delegate="randomizeSelection()">Randomize Selection</button>
+      <button class="btn btn-info btn-sm" click.delegate="deselectAll()">De-select All</button>
+    </h1>
     <h3>checked.bind="stringProperty"</h3>
     <div class="row">
       <div class="col-sm-6">
@@ -67,6 +90,21 @@
       <div class="col-sm-6">
         <label style="display: block">Result:</label>
         <div css="background-color: ${selectedColor.hex};" class="swatch big"></div>
+      </div>
+    </div>
+
+    <h3>checked.bind="booleanProperty"</h3>
+    <div class="row">
+      <div class="col-sm-6">
+        <ul>
+          <li><label><input type="radio" name="boolean-test" checked.bind="radioBooleanTest.a" />Option A</label></li>
+          <li><label><input type="radio" name="boolean-test" checked.bind="radioBooleanTest.b" />Option B</label></li>
+          <li><label><input type="radio" name="boolean-test" checked.bind="radioBooleanTest.c" />Option C</label></li>
+          <li><label><input type="radio" name="boolean-test" checked.bind="radioBooleanTest.d" />Option D</label></li>
+        </ul>
+      </div>
+      <div class="col-sm-6">
+        { a: ${radioBooleanTest.a}, b: ${radioBooleanTest.b}, c: ${radioBooleanTest.c}, d: ${radioBooleanTest.d} }
       </div>
     </div>
   </div>

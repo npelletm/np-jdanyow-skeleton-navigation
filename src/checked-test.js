@@ -9,9 +9,29 @@ export class Test {
 
     this.selectedColorNames = [this.colors[82].name, this.colors[3].name];
     this.selectedColorName = this.colors[82].name;
+
+    this.checkedBooleanTest = { a: false, b: true, c: false, d: true };
+    this.radioBooleanTest = { a: false, b: false, c: false, d: false };
   }
 
-  randomizeSelection() {
+  deselectAll() {
+    this.selectedColors = [];
+    this.selectedColor = null;
+    this.selectedColorNames = [];
+    this.selectedColorName = null;
+
+    this.checkedBooleanTest.a = false;
+    this.checkedBooleanTest.b = false;
+    this.checkedBooleanTest.c = false;
+    this.checkedBooleanTest.d = false;
+
+    this.radioBooleanTest.a = false;
+    this.radioBooleanTest.b = false;
+    this.radioBooleanTest.c = false;
+    this.radioBooleanTest.d = false;
+  }
+
+  randomizeSelection(iterations = 7) {
     var i = this.random(1, this.colors.length),
         items = [];
     while(i--) {
@@ -38,9 +58,25 @@ export class Test {
       this.selectedColorNames.push(items[i].name);
       this.selectedColors.push(items[i]);
     }
+
+    this.checkedBooleanTest.a = this.random(0, 1) === 1;
+    this.checkedBooleanTest.b = this.random(0, 1) === 1;
+    this.checkedBooleanTest.c = this.random(0, 1) === 1;
+    this.checkedBooleanTest.d = this.random(0, 1) === 1;
+
+    var r = this.random(0, 3);
+    this.radioBooleanTest.a = r === 0;
+    this.radioBooleanTest.b = r === 1;
+    this.radioBooleanTest.c = r === 2;
+    this.radioBooleanTest.d = r === 3;
+
+    if (iterations > 0) {
+      iterations--;
+      setTimeout(() => this.randomizeSelection(iterations), 100);
+    }
   }
 
-  randomizeOptions() {
+  randomizeOptions(iterations = 7) {
     var colors = this.colors,
         i = colors.length;
     while(i--) {
@@ -51,6 +87,11 @@ export class Test {
     i = colors.length;
     while(i--) {
       delete colors[i].sort;
+    }
+
+    if (iterations > 0) {
+      iterations--;
+      setTimeout(() => this.randomizeOptions(iterations), 100);
     }
   }
 
